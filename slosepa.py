@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 #
 # slosepa.py
-# ver 0.1
-# 20191008
+# SLOw hash SEcure Password Author
+# ver 0.2 - 20191017
+#   black-box-ification
+#   -randomized dict init
+#   -randomized selection of digest nibble
 #
 # **************
 # * escollapse *
@@ -16,25 +19,32 @@
 #   3 - press play
 #
 # future operations:
-#   1 - gui with argument inputs
+#   1 - argument inputs
+#   2 - triple seed
+#   3 - triple dict
+#   4 - gui
+#   5 - browser plugin?
 
 import string
 import secrets
 import hashlib
 
 # initializations
-allOfTheAbove = string.ascii_letters + string.digits + string.punctuation
+allChar = string.ascii_letters + string.digits + string.punctuation
+allChar = list(allChar)
 pwLength = 30
 rounds = 500000
 conversionDict = {}
-for i in range(94):
-    conversionDict[hex(i)] = allOfTheAbove[i]
+temp = ''
+for i in range(len(allChar)):
+    temp = secrets.choice(allChar)
+    allChar.remove(temp)
+    conversionDict[hex(i)] = temp
 
 # generate seed to hashing functions
-seedClass = secrets.SystemRandom()
 seed = ''
 for i in range(pwLength):
-    seed += seedClass.choice(allOfTheAbove)
+    seed += secrets.choice(list(conversionDict.values()))
 print("'seed' = " + seed)
 
 blaked = hashlib.blake2b()
@@ -52,11 +62,12 @@ for i in range(rounds):
 
 preprefinal = ''
 for i in range(pwLength):
-    if i % 3 == 0:
+    j = secrets.randbelow(3)
+    if j == 0:
         preprefinal += blaked.hexdigest()[i]
-    elif i % 3 == 1:
+    elif j == 1:
         preprefinal += sha3d.hexdigest()[i]
-    else: # i % 3 = 2
+    elif j == 2:
         preprefinal += sha2d.hexdigest()[i]
 prefinal = [i+j for i, j in zip(preprefinal[::2], preprefinal[1::2])]
 
@@ -66,11 +77,12 @@ rsha2d = sha2d.hexdigest()[::-1]
 
 preprefinal2 = ''
 for i in range(pwLength):
-    if i % 3 == 0:
+    j = secrets.randbelow(3)
+    if j == 0:
         preprefinal2 += rblaked[i]
-    elif i % 3 == 1:
+    elif j == 1:
         preprefinal2 += rsha3d[i]
-    else: # i % 3 = 2
+    elif j == 2:
         preprefinal2 += rsha2d[i]
 prefinal2 = [i+j for i, j in zip(preprefinal2[::2], preprefinal2[1::2])]
 
@@ -92,7 +104,7 @@ final += ''.join(prefinal2)
 
 # ensure user requirement is met
 if len(final) != pwLength:
-    addToFinal = str(secrets.randbelow(len(allOfTheAbove)))
+    addToFinal = str(secrets.randbelow(len(allChar)))
     addToFinal = conversionDict[hex(int(addToFinal))]
     final += ''.join(addToFinal)
     print("'final' = " + final)
