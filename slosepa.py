@@ -2,6 +2,8 @@
 #
 # slosepa.py
 # SLOw hash SEcure Password Author
+# ver 0.31 - 20191122
+#   -minor fix to seeds' init's
 # ver 0.3 - 20191121
 #   random-randomization
 #   -unique, randomer seeds to each hash function
@@ -64,9 +66,9 @@ for i in range(pwLength * randb(1337) + 1):
     j = randb(3)
     if j == 0:
         seed1 += ch(list(conversionDict1.values()))
-    if j == 1:
+    elif j == 1:
         seed1 += ch(list(conversionDict2.values()))
-    if j == 2:
+    elif j == 2:
         seed1 += ch(list(conversionDict3.values()))
 # uncomment to print
 #print("'seed1' = " + seed1)
@@ -75,9 +77,9 @@ for i in range(pwLength * randb(1337) + 1):
     j = randb(3)
     if j == 0:
         seed2 += ch(list(conversionDict1.values()))
-    if j == 1:
+    elif j == 1:
         seed2 += ch(list(conversionDict2.values()))
-    if j == 2:
+    elif j == 2:
         seed2 += ch(list(conversionDict3.values()))
 # uncomment to print
 #print("\n'seed2' = " + seed2)
@@ -86,9 +88,9 @@ for i in range(pwLength * randb(1337) + 1):
     j = randb(3)
     if j == 0:
         seed3 += ch(list(conversionDict1.values()))
-    if j == 1:
+    elif j == 1:
         seed3 += ch(list(conversionDict2.values()))
-    if j == 2:
+    elif j == 2:
         seed3 += ch(list(conversionDict3.values()))
 # uncomment to print
 #print("\n'seed3' = " + seed3)
