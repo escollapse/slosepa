@@ -3,7 +3,7 @@
 # slosepa.py
 # SLO       SE     P        A
 # SLOw hash SEcure Password Author
-# ver 0.5 - 2019????
+# ver 0.5 - 20191128
 #   pen-penultimate
 #   -multithreading
 #   -arg inputs from cmd line
