@@ -1,6 +1,8 @@
 # slosepa
 SLOw hash SEcure Password Author
+
 SLO       SE     P        A
+
 SLOSEPA
 
 creates an essentially random password by leveraging hash algorithms and cryptographically secure operating system randomness
